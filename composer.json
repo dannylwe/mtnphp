@@ -1,6 +1,7 @@
 {
     "require": {
-        "guzzlehttp/guzzle": "^6.5"
+        "guzzlehttp/guzzle": "^6.5",
+        "ramsey/uuid": "^4.0"
     },
     "scripts": {
         "test": "phpunit"
