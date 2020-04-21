@@ -10,6 +10,7 @@ use App\Key;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 
 function getDisbursmentToken() {
     $refId = "f30148d6-996d-4e27-8125-3f7beb0daebe";
@@ -21,20 +22,28 @@ function getDisbursmentToken() {
         // You can set any number of default request options.
         'timeout'  => 20.0,
     ]);
-    $response = $clientKey->request("POST","disbursement/token/", [
-        RequestOptions::HEADERS => [
-            'Accept' => 'application/json',
-            "Ocp-Apim-Subscription-Key" => $subscriptionKey,
-            'X-Reference-Id' => $refId,            
-        ],
-        RequestOptions::AUTH => [
-            $refId, $apiKey
-        ]
-    ]);
-    if($response->getStatusCode() == 200){
-        $tokenBody = json_decode($response->getBody());
-        $token = $tokenBody->access_token;
-        return $token;
+    try {
+        $response = $clientKey->request("POST","disbursement/token/", [
+            RequestOptions::HEADERS => [
+                'Accept' => 'application/json',
+                "Ocp-Apim-Subscription-Key" => $subscriptionKey,
+                'X-Reference-Id' => $refId,            
+            ],
+            RequestOptions::AUTH => [
+                $refId, $apiKey
+            ]
+        ]);
+        if($response->getStatusCode() == 200){
+            $tokenBody = json_decode($response->getBody());
+            $token = $tokenBody->access_token;
+            return $token;
+        }
+    } catch (ServerException $e) {
+        $resp = $e->getResponse();
+        $responseBodyAsString = $resp->getBody()->getContents();
+        if(json_decode($responseBodyAsString)->error == "login_failed"){
+            return "api key expired";
+        }
     }
 }
 
