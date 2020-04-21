@@ -1,10 +1,10 @@
 <?php
 
+namespace App\Key;
 require '../../vendor/autoload.php';
 
 header('Content-Type: application/json');
 
-use App\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Exception\ClientException;
@@ -24,19 +24,14 @@ function getApiKey() {
         RequestOptions::HEADERS => [
             'Accept' => 'application/json',
             "Ocp-Apim-Subscription-Key" => $subscriptionKey,
-            // 'X-Reference-Id' => $uuid->toString(),
-            // 'X-Target-Environment' => 'sandbox',
-            // 'Authorization' => 'Bearer ' . $token
             ],
     ]);
     $apiBody = json_decode($response->getBody());
     $key = $apiBody->apiKey;
-    echo json_encode(
-        array(
-            "status" => $response->getStatusCode(),
-            "apiKey" => $key
-            )
-    );
+    if($response->getStatusCode() == 201) {
+        return $key;
+    }
 }
 
-getApiKey();
+// echo getApiKey();
+// 9a8e6147f229492e86b27b07e8d022ee
