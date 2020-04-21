@@ -8,13 +8,17 @@ header('Content-Type: application/json');
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Exception\ClientException;
+use Dotenv;
+
+$dotenv = Dotenv\Dotenv::createMutable("../../");
+$dotenv->load();
 
 function getApiKey() {
-    $refId = "f30148d6-996d-4e27-8125-3f7beb0daebe";
-    $subscriptionKey = "819f567702324c2d9b2f2a143a1fd591";
+    $refId = getenv('REFID');
+    $subscriptionKey = getenv('OCPKEY');
     $clientKey = new Client([
         // Base URI is used with relative requests
-        'base_uri' => 'https://sandbox.momodeveloper.mtn.com/',
+        'base_uri' => getenv('BASEURI'),
         // You can set any number of default request options.
         'timeout'  => 20.0,
     ]);
@@ -34,6 +38,3 @@ function getApiKey() {
         echo json_encode(array("statusError" => "Connection Error to MTN"));
     }   
 }
-
-// echo getApiKey();
-// 9a8e6147f229492e86b27b07e8d022ee

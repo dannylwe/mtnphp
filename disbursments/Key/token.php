@@ -11,14 +11,18 @@ use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
+use Dotenv;
+
+$dotenv = Dotenv\Dotenv::createMutable("../../");
+$dotenv->load();
 
 function getDisbursmentToken() {
-    $refId = "f30148d6-996d-4e27-8125-3f7beb0daebe";
-    $subscriptionKey = "819f567702324c2d9b2f2a143a1fd591";
+    $refId = getenv('REFID');
+    $subscriptionKey = getenv('OCPKEY');
     $apiKey = Key\getApiKey();
     $clientKey = new Client([
         // Base URI is used with relative requests
-        'base_uri' => 'https://sandbox.momodeveloper.mtn.com/',
+        'base_uri' => getenv('BASEURI'),
         // You can set any number of default request options.
         'timeout'  => 20.0,
     ]);
@@ -46,5 +50,3 @@ function getDisbursmentToken() {
         }
     }
 }
-
-// echo getDisbursmentToken();
