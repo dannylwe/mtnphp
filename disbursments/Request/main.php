@@ -7,9 +7,9 @@ require_once '../key/apikey.php';
 
 header('Content-Type: application/json');
 
-use App\Key;
+// use App\Key;
 
-$apiKey = Key\getApiKey();
+// $apiKey = Key\getApiKey();
 // echo $apiKey;
 
 use GuzzleHttp\Client;
