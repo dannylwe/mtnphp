@@ -8,9 +8,11 @@
         "test": "phpunit"
     },
     "autoload": {
-        "classmap":["disbursments/"],
+        "classmap":[
+            "disbursements/"
+        ],
         "psr-4": {
-            "App\\":"disbursments"
+            "App\\": "disbursements"
         }
     },
     "require-dev": {

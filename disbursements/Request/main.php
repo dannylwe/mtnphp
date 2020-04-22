@@ -39,15 +39,15 @@ try {
             'Authorization' => 'Bearer ' . $token
             ],
         RequestOptions::JSON => [
-            "amount" => "5000.0",
+            "amount" => $_POST["amount"],
             "currency" => "EUR",
-            "externalId" => "1241235246039",
+            "externalId" => $_POST["externalId"],
             "payee" => array(
                 "partyIdType" => "MSISDN",
-                "partyId" => "2379524"
+                "partyId" => $_POST["partyId"]
             ),
-            "payerMessage" => "Make bulk payment",
-            "payeeNote" => "yeah"
+            "payerMessage" => $_POST["payerMessage"],
+            "payeeNote" => "You have received funds"
         ]
     ]);
     
