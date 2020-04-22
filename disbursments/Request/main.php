@@ -3,7 +3,7 @@
 namespace App\Request;
 
 require '../../vendor/autoload.php';
-require_once '../key/token.php';
+require_once '../Key/token.php';
 
 header('Content-Type: application/json');
 
