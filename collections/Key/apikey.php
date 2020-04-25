@@ -38,3 +38,4 @@ function getApiKey() {
         echo json_encode(array("statusError" => "Connection Error to MTN"));
     }   
 }
+//echo getApiKey();
