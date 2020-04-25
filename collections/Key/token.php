@@ -50,3 +50,4 @@ function getCollectionToken() {
         }
     }
 }
+//echo getCollectionToken();
