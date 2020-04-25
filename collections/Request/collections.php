@@ -56,7 +56,8 @@ try {
             array(
                 "status" => "payment posted successfully", 
                 "statusCode" => $response->getStatusCode(),
-                "paymentId" => $uuid->toString()
+                "paymentId" => $uuid->toString(),
+                "paymentType" => "collections"
             )
         );
     }  
