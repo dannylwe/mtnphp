@@ -27,7 +27,7 @@ $token = Key\getCollectionToken();
 $dotenv = Dotenv\Dotenv::createMutable("../../");
 $dotenv->load();
 
-$subscriptionKey = getenv('OCPKEY');
+$subscriptionKey = getenv('OCPKEYCOLLECTIONS');
 
 try {
     $response = $client->request("POST","/collection/v1_0/requesttopay", [
