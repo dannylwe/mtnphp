@@ -54,7 +54,7 @@ try {
     if($response->getStatusCode() == 202) {
         echo json_encode(
             array(
-                "status" => "payment posted successfully", 
+                "status" => "payment initiated successfully",
                 "statusCode" => $response->getStatusCode(),
                 "paymentId" => $uuid->toString(),
                 "paymentType" => "collections"
