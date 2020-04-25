@@ -22,15 +22,15 @@ $client = new Client([
     'timeout'  => 20.0,
 ]);
 $uuid = Uuid::uuid4();
-$token = Key\getDisbursmentToken();
+$token = Key\getCollectionToken();
 
 $dotenv = Dotenv\Dotenv::createMutable("../../");
 $dotenv->load();
 
-$subscriptionKey = getenv('OCPKEY');
+$subscriptionKey = getenv('OCPKEYCOLLECTIONS');
 
 try {
-    $response = $client->request("POST","/disbursement/v1_0/transfer", [
+    $response = $client->request("POST","/collection/v1_0/requesttopay", [
         RequestOptions::HEADERS => [
             'Accept' => 'application/json',
             "Ocp-Apim-Subscription-Key" => $subscriptionKey,
@@ -42,7 +42,7 @@ try {
             "amount" => $_POST["amount"],
             "currency" => "EUR",
             "externalId" => $_POST["externalId"],
-            "payee" => array(
+            "payer" => array(
                 "partyIdType" => "MSISDN",
                 "partyId" => $_POST["partyId"]
             ),
@@ -57,7 +57,7 @@ try {
                 "status" => "payment posted successfully", 
                 "statusCode" => $response->getStatusCode(),
                 "paymentId" => $uuid->toString(),
-                "paymentType" => "disbursements"
+                "paymentType" => "collections"
             )
         );
     }  
