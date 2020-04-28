@@ -60,7 +60,9 @@ try {
                 "paymentType" => "collections"
             )
         );
-    }  
+    } else {
+        echo json_encode(array("statusError" => "MTN API error"));
+    } 
 } catch (ClientException $e) {
     echo json_encode(array("statusError" => "token has expired"));
 }
