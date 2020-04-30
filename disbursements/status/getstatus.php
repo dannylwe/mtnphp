@@ -1,10 +1,7 @@
 <?php
 
-namespace App\Request;
-
 require_once '../../vendor/autoload.php';
 require_once '../Key/token.php';
-
 header('Content-Type: application/json');
 
 use App\Key;
@@ -30,37 +27,26 @@ $dotenv->load();
 $subscriptionKey = getenv('OCPKEY');
 
 try {
-    $response = $client->request("POST","/disbursement/v1_0/transfer", [
+    $partyId = $_POST['partyId'];
+
+    $response = $client->request("GET","/disbursement/v1_0/accountholder/MSISDN/$partyId/active", [
         RequestOptions::HEADERS => [
             'Accept' => 'application/json',
             "Ocp-Apim-Subscription-Key" => $subscriptionKey,
-            'X-Reference-Id' => $uuid->toString(),
             'X-Target-Environment' => 'sandbox',
             'Authorization' => 'Bearer ' . $token
-            ],
-        RequestOptions::JSON => [
-            "amount" => $_POST["amount"],
-            "currency" => "EUR",
-            "externalId" => $_POST["externalId"],
-            "payee" => array(
-                "partyIdType" => "MSISDN",
-                "partyId" => $_POST["partyId"]
-            ),
-            "payerMessage" => $_POST["payerMessage"],
-            "payeeNote" => "You have received funds"
         ]
     ]);
-    
-    if($response->getStatusCode() == 202) {
+
+    if($response->getStatusCode() == 200) {
         echo json_encode(
             array(
-                "status" => "payment posted successfully", 
+                "status" => "status retrieved successfully",
                 "statusCode" => $response->getStatusCode(),
-                "paymentId" => $uuid->toString(),
-                "paymentType" => "disbursements"
+
             )
         );
-    }  
+    }
 } catch (ClientException $e) {
-    echo json_encode(array("statusError" => "token has expired"));
+    echo json_encode(array("statusError" => "token expired"));
 }

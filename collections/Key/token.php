@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Key;
-require '../../vendor/autoload.php';
+require_once '../../vendor/autoload.php';
 require_once '../Key/apikey.php';
 
 header('Content-Type: application/json');
