@@ -48,5 +48,5 @@ try {
         );
     }
 } catch (ClientException $e) {
-    echo json_encode(array("statusError" => "token expired"));
+    echo json_encode(array("statusError" => "server error at MTN"));
 }
