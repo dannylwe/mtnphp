@@ -29,7 +29,7 @@ $subscriptionKey = getenv('OCPKEYCOLLECTIONS');
 try {
     $partyId = $_POST['partyId'];
 
-    $response = $client->request("GET","/collection/v1_0/accountholder/MSISDN/$partyId/active", [
+    $response = $client->request("GET","/collection/v1_0/accountholder/msisdn/$partyId/active", [
         RequestOptions::HEADERS => [
             'Accept' => 'application/json',
             "Ocp-Apim-Subscription-Key" => $subscriptionKey,
@@ -38,12 +38,14 @@ try {
         ]
     ]);
 
+    $body = json_decode($response->getBody(), true );
+
     if($response->getStatusCode() == 200) {
         echo json_encode(
             array(
                 "status" => "status retrieved successfully",
                 "statusCode" => $response->getStatusCode(),
-
+                "mtnResponse" => $body
             )
         );
     }

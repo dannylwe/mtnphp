@@ -38,12 +38,14 @@ try {
         ]
     ]);
 
+    $body = json_decode($response->getBody(), true );
+
     if($response->getStatusCode() == 200) {
         echo json_encode(
             array(
                 "status" => "status retrieved successfully",
                 "statusCode" => $response->getStatusCode(),
-
+                "mtnResponse" => $body
             )
         );
     }
